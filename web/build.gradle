@@ -1,0 +1,23 @@
+apply plugin: 'war'
+apply plugin: 'jetty'
+
+configurations {
+    client
+}
+
+dependencies {
+    client project(
+        path: ':client',
+        configuration: 'assembly'
+    )
+}
+
+war {
+    from {
+        configurations.client.collect {
+            zipTree(it)
+        }
+    }
+}
+
+

@@ -1,0 +1,18 @@
+apply plugin: 'java'
+
+task assembleClient(type:Zip) {
+    from "src/main"
+}
+
+configurations {
+    assembly
+}
+
+artifacts {
+     assembly assembleClient
+}
+
+assemble.dependsOn assembleClient
+
+
+
