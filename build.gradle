@@ -1,0 +1,22 @@
+apply plugin: 'java'
+
+configurations {
+    web
+}
+dependencies {
+    web project(
+        path:":web",
+        configuration: 'archives'
+    )
+}
+
+
+task deployApplication(type:Copy) {
+    from {
+        configurations.web.filter { 
+            it.name.endsWith(".war") 
+        }
+    }
+    into "deployments"
+}
+
