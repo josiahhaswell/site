@@ -1,7 +1,22 @@
 apply plugin: 'java'
 
+def js = [:]
+js.assets = [
+        "jquery.js",
+        "bootstrap.js",
+        "angular.js",
+        "require.js"
+]
+
+def css = [:]
+css.assets = [
+    "bootstrap.css",
+    "bootstrap-theme.css"
+]
+
 task assembleClient(type:Zip) {
     from "src/main"
+    exclude "resources/assets/**/*.*"
 }
 
 configurations {
@@ -10,6 +25,28 @@ configurations {
 
 artifacts {
      assembly assembleClient
+}
+
+task copyAssets(type:Copy) {
+    from files('src/main/resources/assets')
+    into "${projectDir}"
+    eachFile { details ->
+        def rp = details.relativePath
+        def path = "${rp}"
+        def last = path[path.lastIndexOf("/") + 1..path.length() - 1]
+        def fst = path[0.. path.indexOf("/") - 1]
+        if(js.assets.contains(last)) {
+            details.relativePath = RelativePath.parse(rp.isFile(), "src/main/js/lib/$fst/$last")
+        } else if(css.assets.contains(last)) {
+            details.relativePath = RelativePath.parse(rp.isFile(), "src/main/css/assets/$fst/$last")
+        }
+        else {
+            details.relativePath = RelativePath.parse(rp.isFile(), "build/$fst/$last")
+        }
+
+    }
+
+
 }
 
 assemble.dependsOn assembleClient

@@ -1,0 +1,23 @@
+{
+  "name": "client",
+  "version": "0.0.0",
+  "homepage": "https://github.com/josiahhaswell/site",
+  "authors": [
+    "haswell <josiah.haswell@ca.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/main/js/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.1.1",
+    "jquery": "~2.1.0",
+    "angular": "~1.2.14",
+    "requirejs": "~2.1.11"
+  }
+}
